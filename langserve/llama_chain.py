@@ -4,29 +4,18 @@ from langchain.prompts.prompt import PromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 from langchain_ollama import ChatOllama
 
-from langserve.pydantic_v1 import BaseModel
+from pydantic.v1 import BaseModel, Field
 
 llm = ChatOllama(
-    model="llama3.1",
-    temperature=0,
+    model="llama2",
+    temperature=0.3,
+    base_url="https://e8hupnv84c4a4c-11434.proxy.runpod.net//api/generate"
     # other params...
 )
 
 
 # Templates
-_TEMPLATE = """Dado el siguiente documento, genera un resumen detallado y extenso del mismo, en su idioma original.
-{document}
-
-Instrucciones para el resumen:
-- Destaca los puntos clave del documento.
-- Proporciona detalles relevantes que ayuden a entender mejor el contenido.
-- Enfócate en la esencia del contenido para una comprensión rápida y efectiva.
-- Mantén la objetividad y precisión en la información presentada, evitando sesgos o interpretaciones subjetivas.
-- Estructura el resumen en párrafos separados por temas o secciones importantes.
-- Incluye ejemplos específicos y citas textuales cuando sea relevante.
-- Si hay varias secciones o capítulos, proporciona un resumen detallado de cada uno.
-
-Resumen:"""
+_TEMPLATE = """Dime que funcionas"""
 
 
 # Prompts
@@ -35,7 +24,7 @@ SUMMARY_PROMPT = PromptTemplate.from_template(_TEMPLATE)
 
 
 
-def get_summary_chain():
+def get_chain():
 
     # User input
     class interactive_data(BaseModel):
